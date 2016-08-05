@@ -2,11 +2,13 @@
 
 def try_load_students
   filename = ARGV.first #first argument from command line
-  return if filename.nil? #get out of the method if it isn't given
-  if File.exists?(filename) #if it exists
+  if filename == nil
+    filename = "students.csv"
+    load_students filename
+  elsif File.exists?(filename) #if it exists
     load_students(filename)
     puts "Loaded #{@students.count} from #{filename}"
-  else #if it doesn't exist
+  else  #if it doesn't exist
     puts "Sorry, #{filename} doesn't exist."
     exit #Quit program
   end
@@ -25,7 +27,7 @@ def input_students
       cohort = nil
     end
     #add the student hash to the array
-    add_students name, cohort 
+    add_students name, cohort
     puts "Now we have #{@students.count} students"
     #get another name from the user
     name = STDIN.gets.chomp
