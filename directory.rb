@@ -41,6 +41,7 @@ def load_students (filename = "students.csv")
     add_students name, cohort
   end
   file.close
+  puts "Students list loaded :)".center(80)
 end
 
 def add_students name, cohort
@@ -61,6 +62,7 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "List saved to students.csv".center(80)
 end
 
 def interactive_menu
@@ -87,35 +89,40 @@ end
 def process(selection)
   case selection
   when "1"
+    puts "Please follow the instructions to enter students details".center(80)
     input_students
   when "2"
+    puts "Printing students list...".center(80)
     show_students
   when "3"
+
     save_students
   when "4"
     load_students
   when "9"
+    puts "Goodbye, we hope to see you soon!".center(80)
     exit # this will cause the program to terminate
   else
-    puts "I don't know what you meant, try again"
+    puts "I don't know what you meant, try again".center(80)
   end
 end
 
 def print_header
   puts ""
-  puts "The students of Villain Academy"
-  puts "--------------"
+  puts "The students of Villain Academy".center(80)
+  puts "--------------".center(80)
 end
 
 def print_students_list
   @students.each_with_index do |student, index|
-  puts "#{index+1}. #{student[:name]}, (#{student[:cohort]} cohort)"
+  puts "#{index+1}. #{student[:name]}, (#{student[:cohort]} cohort)".center(80)
   end
 end
 
 def print_footer
   puts ""
-  puts "Overall, we have #{@students.count} great students"
+  puts "Overall, we have #{@students.count} great students".center(80)
+  puts ""
 end
 
 try_load_students
