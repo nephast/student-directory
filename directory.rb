@@ -35,12 +35,12 @@ def input_students
 end
 
 def load_students filename
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
+  File.open(filename, "r") do |f|
+    while line = f.gets
   name, cohort = line.chomp.split(',')
     add_students name, cohort
   end
-  file.close
+end
   puts "Students list loaded :)".center(80)
 end
 
@@ -57,16 +57,18 @@ def file_name
   filename = STDIN.gets.chomp
 end
 
-def save_students (filename)
+def save_students filename
   #open file for writing
-  file = File.open(filename, "w")
-  # iterate over the array of students
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  File.open(filename, "w") do |f|
+
+      # iterate over the array of students
+      @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      f.puts csv_line
+
+    end
   end
-  file.close
   puts "List saved to #{filename}".center(80)
 end
 
