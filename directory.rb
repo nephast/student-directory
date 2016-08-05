@@ -12,13 +12,41 @@ def try_load_students
   end
 end
 
+def input_students
+  puts "Please enter the names of the students"
+  puts "To finish, just hit return twice"
+  #Getting input from user
+  name = STDIN.gets.chomp
+  #While the name is NOT empty, repeat this code
+  while !name.empty? do
+    puts "Please enter their cohort or leave it blank for default one"
+    cohort = STDIN.gets.chomp
+    if cohort == ""
+      cohort = nil
+    end
+    #add the student hash to the array
+    add_students name, cohort 
+    puts "Now we have #{@students.count} students"
+    #get another name from the user
+    name = STDIN.gets.chomp
+  end
+end
+
 def load_students (filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+    add_students name, cohort
   end
   file.close
+end
+
+def add_students name, cohort
+  if cohort == nil
+  @students << {name: name, cohort: cohort ||= "november".to_sym}
+else
+    @students << {name: name, cohort: cohort.to_sym}
+  end
 end
 
 def save_students
@@ -68,21 +96,6 @@ def process(selection)
     exit # this will cause the program to terminate
   else
     puts "I don't know what you meant, try again"
-  end
-end
-
-def input_students
-  puts "Please enter the names of the students"
-  puts "To finish, just hit return twice"
-  #Getting input from user
-  name = STDIN.gets.chomp
-  #While the name is NOT empty, repeat this code
-  while !name.empty? do
-    #add the student hash to the array
-    @students << {name: name, cohort: :november}
-    puts "Now we have #{@students.count} students"
-    #get another name from the user
-    name = STDIN.gets.chomp
   end
 end
 
